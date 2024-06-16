@@ -20,3 +20,15 @@ h1 {
 .form-control input {
  padding: 5px;
 }
+
+/*books*/ 
+
+.books-container div {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.bold {
+    font-weight: bold;
+}

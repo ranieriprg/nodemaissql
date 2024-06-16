@@ -25,17 +25,31 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.post("/books/insertbook", (req, res, next) => {
-  const title = req.body.title
+app.post("/books/insertbook", (req, res) => {
+  const title = req.body.title;
   const pagesqty = req.body.pagesqty;
   console.log(`O titulo do livro é ${title} e ele possui ${pagesqty}`);
-const sql = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pagesqty}')`;
-conn.query(sql, function(err) {
-  if(err){
-    console.log('error', err);
-  }
-  res.redirect('/')
-})
+  const sql = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pagesqty}')`;
+  conn.query(sql, function (err) {
+    if (err) {
+      console.log("error", err);
+      return
+    }
+    res.redirect("/");
+  });
+});
+
+app.get("/books", (req, res) => {
+  const sql = "SELECT * FROM books"
+  conn.query(sql, function(err, data) {
+    if(err){
+      console.log('falha ao buscar books');
+      return
+    }
+    const books = data
+    console.log(books);
+    res.render('books', {books})
+  })
 });
 
 const conn = mysql.createConnection({
